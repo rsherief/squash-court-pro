@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – Squash Court Pro</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a2540;
+      --accent: #00d9ff;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--light);
+      color: var(--dark-text);
+    }
+
+    .admin-header {
+      background: var(--navy);
+      color: white;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    .admin-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .user-info {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-btn:hover {
+      color: var(--dark-text);
+    }
+
+    .editor-section {
+      display: none;
+    }
+
+    .editor-section.active {
+      display: block;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .editor-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .editor-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+    }
+
+    .editor-panel h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark-text);
+      font-size: 0.9rem;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .preview-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .preview-panel h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .preview-content {
+      background: var(--light);
+      padding: 1.5rem;
+      border-radius: 4px;
+      line-height: 1.8;
+    }
+
+    .preview-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .preview-content p {
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .save-btn {
+      flex: 1;
+      background: var(--accent);
+      color: var(--navy);
+      border: none;
+      padding: 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 217, 255, 0.3);
+    }
+
+    .reset-btn {
+      flex: 1;
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .reset-btn:hover {
+      background: var(--light);
+    }
+
+    .status-message {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .status-message.success {
+      background: #efe;
+      color: #3a3;
+      display: block;
+    }
+
+    .status-message.error {
+      background: #fee;
+      color: #c33;
+      display: block;
+    }
+
+    .issue-link {
+      background: #f0f7ff;
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .issue-link strong {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-header">
+    <h1>⚡ Squash Court Pro – Admin Dashboard</h1>
+    <div>
+      <div class="user-info">👋 Logged in as: <strong id="username"></strong></div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('home')">🏠 Home Page</button>
+      <button class="tab-btn" onclick="switchTab('products')">🛍️ Products</button>
+      <button class="tab-btn" onclick="switchTab('about')">ℹ️ About</button>
+    </div>
+
+    <!-- HOME PAGE EDITOR -->
+    <div id="home" class="editor-section active">
+      <div class="issue-link">
+        <strong>📌 Learning Task:</strong> Complete GitHub Issues #1, #2, #4, #5 while editing content here.
+      </div>
+
+      <div class="editor-grid">
+        <div class="editor-panel">
+          <h3>Edit Home Page</h3>
+
+          <div id="homeStatus" class="status-message"></div>
+
+          <div class="form-group">
+            <label>Page Title</label>
+            <input type="text" id="homeTitle" value="Squash Court Pro – Riyadh's Premium Squash Equipment">
+          </div>
+
+          <div class="form-group">
+            <label>Meta Description (for Google)</label>
+            <textarea id="homeMetaDesc">Discover premium squash equipment in Riyadh. Expert-curated rackets, balls, shoes & accessories. Fast delivery. Professional coaching guidance.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Hero Heading (H1)</label>
+            <input type="text" id="homeHeading" value="Master Your Game">
+          </div>
+
+          <div class="form-group">
+            <label>Hero Subheading</label>
+            <textarea id="homeSubheading">Premium squash equipment and professional tools for athletes in Riyadh</textarea>
+          </div>
+
+          <div class="button-group">
+            <button class="save-btn" onclick="saveContent('home')">💾 Save Changes</button>
+            <button class="reset-btn" onclick="resetContent('home')">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <h3>📱 Preview</h3>
+          <div class="preview-content">
+            <div id="homePreview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS EDITOR -->
+    <div id="products" class="editor-section">
+      <div class="issue-link">
+        <strong>📌 Learning Task:</strong> Complete GitHub Issue #2 (Add product images) while editing.
+      </div>
+
+      <div class="editor-grid">
+        <div class="editor-panel">
+          <h3>Edit Products Page</h3>
+
+          <div id="productsStatus" class="status-message"></div>
+
+          <div class="form-group">
+            <label>Page Title</label>
+            <input type="text" id="productsTitle" value="Products – Squash Court Pro">
+          </div>
+
+          <div class="form-group">
+            <label>Meta Description</label>
+            <textarea id="productsMetaDesc">Browse squash rackets, balls, shoes & training gear. Professional-grade equipment from trusted brands. Filter by category & find your perfect gear.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Page Heading (H1)</label>
+            <input type="text" id="productsHeading" value="Our Products">
+          </div>
+
+          <div class="form-group">
+            <label>Featured Product Description</label>
+            <textarea id="productsFeatured">Everything you need to dominate on the court</textarea>
+          </div>
+
+          <div class="button-group">
+            <button class="save-btn" onclick="saveContent('products')">💾 Save Changes</button>
+            <button class="reset-btn" onclick="resetContent('products')">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <h3>📱 Preview</h3>
+          <div class="preview-content">
+            <div id="productsPreview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT EDITOR -->
+    <div id="about" class="editor-section">
+      <div class="issue-link">
+        <strong>📌 Learning Task:</strong> Complete GitHub Issue #4 (Internal links) while editing.
+      </div>
+
+      <div class="editor-grid">
+        <div class="editor-panel">
+          <h3>Edit About Page</h3>
+
+          <div id="aboutStatus" class="status-message"></div>
+
+          <div class="form-group">
+            <label>Page Title</label>
+            <input type="text" id="aboutTitle" value="About Us – Squash Court Pro">
+          </div>
+
+          <div class="form-group">
+            <label>Meta Description</label>
+            <textarea id="aboutMetaDesc">Meet the Squash Court Pro team. Expert coaches, sports scientists & equipment specialists dedicated to elevating your game in Riyadh.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Page Heading (H1)</label>
+            <input type="text" id="aboutHeading" value="About Squash Court Pro">
+          </div>
+
+          <div class="form-group">
+            <label>Company Story</label>
+            <textarea id="aboutStory">Squash Court Pro was founded in 2020 with a simple mission: to bring world-class squash equipment to athletes across the Middle East. What started as a small passion project has grown into Riyadh's premier destination for professional squash gear.</textarea>
+          </div>
+
+          <div class="button-group">
+            <button class="save-btn" onclick="saveContent('about')">💾 Save Changes</button>
+            <button class="reset-btn" onclick="resetContent('about')">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <h3>📱 Preview</h3>
+          <div class="preview-content">
+            <div id="aboutPreview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if logged in
+    if (!localStorage.getItem('adminLoggedIn')) {
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('username').textContent = localStorage.getItem('adminUser');
+
+    function switchTab(tab) {
+      // Hide all sections
+      document.querySelectorAll('.editor-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      // Show selected section
+      document.getElementById(tab).classList.add('active');
+      event.target.classList.add('active');
+
+      // Update preview
+      updatePreview(tab);
+    }
+
+    function updatePreview(page) {
+      if (page === 'home') {
+        const heading = document.getElementById('homeHeading').value;
+        const subheading = document.getElementById('homeSubheading').value;
+        document.getElementById('homePreview').innerHTML = `<h2>${heading}</h2><p>${subheading}</p>`;
+      } else if (page === 'products') {
+        const heading = document.getElementById('productsHeading').value;
+        const featured = document.getElementById('productsFeatured').value;
+        document.getElementById('productsPreview').innerHTML = `<h2>${heading}</h2><p>${featured}</p>`;
+      } else if (page === 'about') {
+        const heading = document.getElementById('aboutHeading').value;
+        const story = document.getElementById('aboutStory').value;
+        document.getElementById('aboutPreview').innerHTML = `<h2>${heading}</h2><p>${story}</p>`;
+      }
+    }
+
+    function saveContent(page) {
+      const statusEl = document.getElementById(`${page}Status`);
+
+      // Save to localStorage (in real world, would save to database)
+      if (page === 'home') {
+        localStorage.setItem('homeTitle', document.getElementById('homeTitle').value);
+        localStorage.setItem('homeMetaDesc', document.getElementById('homeMetaDesc').value);
+        localStorage.setItem('homeHeading', document.getElementById('homeHeading').value);
+      } else if (page === 'products') {
+        localStorage.setItem('productsTitle', document.getElementById('productsTitle').value);
+        localStorage.setItem('productsMetaDesc', document.getElementById('productsMetaDesc').value);
+      } else if (page === 'about') {
+        localStorage.setItem('aboutTitle', document.getElementById('aboutTitle').value);
+        localStorage.setItem('aboutMetaDesc', document.getElementById('aboutMetaDesc').value);
+      }
+
+      statusEl.textContent = '✅ Changes saved successfully!';
+      statusEl.className = 'status-message success';
+      setTimeout(() => statusEl.className = 'status-message', 3000);
+    }
+
+    function resetContent(page) {
+      if (confirm('Reset all changes on this page?')) {
+        location.reload();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('adminLoggedIn');
+      localStorage.removeItem('adminUser');
+      window.location.href = 'index.html';
+    }
+
+    // Load saved content on page load
+    window.addEventListener('load', () => {
+      document.getElementById('homeTitle').value = localStorage.getItem('homeTitle') || document.getElementById('homeTitle').value;
+      updatePreview('home');
+    });
+  </script>
+</body>
+</html>
