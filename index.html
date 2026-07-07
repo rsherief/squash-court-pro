@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squash Court Pro – Riyadh's Premium Squash Equipment</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a2540;
+      --accent: #00d9ff;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+      --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      --display: "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --navy: #0d1520;
+        --light: #1a2540;
+        --dark-text: #e8ecf1;
+        --border: #2a3a52;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --navy: #0d1520;
+      --light: #1a2540;
+      --dark-text: #e8ecf1;
+      --border: #2a3a52;
+    }
+
+    :root[data-theme="light"] {
+      --navy: #1a2540;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+    }
+
+    body {
+      font-family: var(--body);
+      color: var(--dark-text);
+      background: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a3a52 100%);
+      color: white;
+      padding: 6rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h2 {
+      font-family: var(--display);
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.95;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--navy);
+      padding: 0.75rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 217, 255, 0.3);
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section h3 {
+      font-family: var(--display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .card { background: #1a2540; }
+    }
+
+    :root[data-theme="dark"] .card {
+      background: #1a2540;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 24px rgba(0, 217, 255, 0.15);
+    }
+
+    .card h4 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      border-top: 3px solid var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: var(--navy);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ Squash Court Pro</h1>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <div class="hero">
+    <h2>Master Your Game</h2>
+    <p>Premium squash equipment and professional tools for athletes in Riyadh</p>
+    <a href="products.html" class="cta-button">Shop Now</a>
+  </div>
+
+  <section class="section">
+    <h3>Why Choose Squash Court Pro?</h3>
+    <div class="grid">
+      <div class="card">
+        <h4>🎯 Premium Quality</h4>
+        <p>Curated equipment from world-leading manufacturers. Every racket tested for performance and durability.</p>
+      </div>
+      <div class="card">
+        <h4>🚀 Expert Guidance</h4>
+        <p>Our team of certified coaches helps you select the perfect gear for your skill level and playing style.</p>
+      </div>
+      <div class="card">
+        <h4>📍 Riyadh-Based</h4>
+        <p>Fast delivery across Saudi Arabia. Same-day pickup available at our showroom in central Riyadh.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: rgba(0, 217, 255, 0.05); border-radius: 8px;">
+    <h3>Ready to Elevate Your Game?</h3>
+    <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Browse our full selection of rackets, balls, shoes, and accessories.</p>
+    <div style="text-align: center;">
+      <a href="products.html" class="cta-button">View Full Catalog</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Squash Court Pro. All rights reserved.</p>
+    <p>📍 Riyadh, Saudi Arabia | 📧 info@squashcourtpro.sa</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    // Load saved theme
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  </script>
+</body>
+</html>

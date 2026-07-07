@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products – Squash Court Pro</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a2540;
+      --accent: #00d9ff;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+      --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      --display: "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --navy: #0d1520;
+        --light: #1a2540;
+        --dark-text: #e8ecf1;
+        --border: #2a3a52;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --navy: #0d1520;
+      --light: #1a2540;
+      --dark-text: #e8ecf1;
+      --border: #2a3a52;
+    }
+
+    :root[data-theme="light"] {
+      --navy: #1a2540;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+    }
+
+    body {
+      font-family: var(--body);
+      color: var(--dark-text);
+      background: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a3a52 100%);
+      color: white;
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header h2 {
+      font-family: var(--display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .filter-btn { background: #1a2540; color: white; }
+    }
+
+    :root[data-theme="dark"] .filter-btn {
+      background: #1a2540;
+      color: white;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent);
+      color: var(--navy);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .product-card { background: #1a2540; }
+    }
+
+    :root[data-theme="dark"] .product-card {
+      background: #1a2540;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 16px 32px rgba(0, 217, 255, 0.2);
+    }
+
+    .product-image {
+      background: linear-gradient(135deg, var(--navy), #2a3a52);
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.8;
+    }
+
+    .product-info {
+      padding: 1.5rem;
+    }
+
+    .product-info h3 {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .product-category {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .product-description {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+
+    .add-to-cart {
+      background: var(--accent);
+      color: var(--navy);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .add-to-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 217, 255, 0.3);
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      border-top: 3px solid var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: var(--navy);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ Squash Court Pro</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <div class="page-header">
+    <h2>Our Products</h2>
+    <p>Everything you need to dominate on the court</p>
+  </div>
+
+  <section class="section">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+      <button class="filter-btn" onclick="filterProducts('rackets')">Rackets</button>
+      <button class="filter-btn" onclick="filterProducts('balls')">Balls</button>
+      <button class="filter-btn" onclick="filterProducts('shoes')">Shoes</button>
+      <button class="filter-btn" onclick="filterProducts('accessories')">Accessories</button>
+    </div>
+
+    <div class="product-grid" id="products">
+      <!-- Rackets -->
+      <div class="product-card" data-category="rackets">
+        <div class="product-image">🎾</div>
+        <div class="product-info">
+          <div class="product-category">Racket</div>
+          <h3>Pro Titanium 135g</h3>
+          <p class="product-description">Lightweight titanium frame for maximum speed and control</p>
+          <div class="product-price">599 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="rackets">
+        <div class="product-image">🎾</div>
+        <div class="product-info">
+          <div class="product-category">Racket</div>
+          <h3>Classic Steel 160g</h3>
+          <p class="product-description">Durable steel construction, perfect for all levels</p>
+          <div class="product-price">349 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="rackets">
+        <div class="product-image">🎾</div>
+        <div class="product-info">
+          <div class="product-category">Racket</div>
+          <h3>Power Grip Pro</h3>
+          <p class="product-description">Advanced grip technology with ergonomic handle design</p>
+          <div class="product-price">799 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Balls -->
+      <div class="product-card" data-category="balls">
+        <div class="product-image">⚫</div>
+        <div class="product-info">
+          <div class="product-category">Balls</div>
+          <h3>Competition Pro Balls (12 pack)</h3>
+          <p class="product-description">Official tournament-grade squash balls</p>
+          <div class="product-price">189 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="balls">
+        <div class="product-image">⚫</div>
+        <div class="product-info">
+          <div class="product-category">Balls</div>
+          <h3>Training Balls (18 pack)</h3>
+          <p class="product-description">Durable practice balls for training sessions</p>
+          <div class="product-price">129 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Shoes -->
+      <div class="product-card" data-category="shoes">
+        <div class="product-image">👟</div>
+        <div class="product-info">
+          <div class="product-category">Shoes</div>
+          <h3>Court Master Shoes</h3>
+          <p class="product-description">Non-marking soles, ankle support, premium comfort</p>
+          <div class="product-price">449 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="shoes">
+        <div class="product-image">👟</div>
+        <div class="product-info">
+          <div class="product-category">Shoes</div>
+          <h3>Speed Runner Shoes</h3>
+          <p class="product-description">Lightweight racing shoe for explosive movement</p>
+          <div class="product-price">529 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Accessories -->
+      <div class="product-card" data-category="accessories">
+        <div class="product-image">🎒</div>
+        <div class="product-info">
+          <div class="product-category">Accessory</div>
+          <h3>Premium Court Bag</h3>
+          <p class="product-description">Spacious bag with racket compartment and ventilation</p>
+          <div class="product-price">189 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="accessories">
+        <div class="product-image">🧤</div>
+        <div class="product-info">
+          <div class="product-category">Accessory</div>
+          <h3>Grip Tape Bundle (3 rolls)</h3>
+          <p class="product-description">Premium tape for improved grip and control</p>
+          <div class="product-price">79 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="accessories">
+        <div class="product-image">💧</div>
+        <div class="product-info">
+          <div class="product-category">Accessory</div>
+          <h3>Sports Water Bottle (750ml)</h3>
+          <p class="product-description">Insulated bottle keeps drinks cold during play</p>
+          <div class="product-price">89 SR</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Squash Court Pro. All rights reserved.</p>
+    <p>📍 Riyadh, Saudi Arabia | 📧 info@squashcourtpro.sa</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    function filterProducts(category) {
+      const products = document.querySelectorAll('.product-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      products.forEach(product => {
+        if (category === 'all' || product.dataset.category === category) {
+          product.style.display = 'block';
+          setTimeout(() => product.style.opacity = '1', 10);
+        } else {
+          product.style.opacity = '0';
+          setTimeout(() => product.style.display = 'none', 300);
+        }
+      });
+    }
+
+    // Load saved theme
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+
+    // Add to cart feedback
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const originalText = this.textContent;
+        this.textContent = '✓ Added!';
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>

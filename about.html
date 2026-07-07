@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us – Squash Court Pro</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a2540;
+      --accent: #00d9ff;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+      --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      --display: "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --navy: #0d1520;
+        --light: #1a2540;
+        --dark-text: #e8ecf1;
+        --border: #2a3a52;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --navy: #0d1520;
+      --light: #1a2540;
+      --dark-text: #e8ecf1;
+      --border: #2a3a52;
+    }
+
+    :root[data-theme="light"] {
+      --navy: #1a2540;
+      --light: #f5f7fa;
+      --dark-text: #0f1419;
+      --border: #e0e4e8;
+    }
+
+    body {
+      font-family: var(--body);
+      color: var(--dark-text);
+      background: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a3a52 100%);
+      color: white;
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header h2 {
+      font-family: var(--display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .section h3 {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .section p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+      text-wrap: pretty;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .value-item {
+      background: white;
+      padding: 2rem;
+      border-radius: 6px;
+      border-left: 4px solid var(--accent);
+      text-align: center;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .value-item { background: #1a2540; }
+    }
+
+    :root[data-theme="dark"] .value-item {
+      background: #1a2540;
+    }
+
+    .value-item h4 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .value-item p {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .team {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .team-member {
+      background: white;
+      padding: 2rem;
+      border-radius: 6px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .team-member { background: #1a2540; }
+    }
+
+    :root[data-theme="dark"] .team-member {
+      background: #1a2540;
+    }
+
+    .team-member-avatar {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-member h4 {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--accent);
+    }
+
+    .team-member-role {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info {
+      background: rgba(0, 217, 255, 0.05);
+      padding: 2rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .contact-item {
+      margin: 1rem 0;
+    }
+
+    .contact-label {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contact-value {
+      font-size: 1.1rem;
+      margin-top: 0.25rem;
+    }
+
+    .contact-value a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .contact-value a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      border-top: 3px solid var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: var(--navy);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ Squash Court Pro</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html" class="active">About</a>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <div class="page-header">
+    <h2>About Squash Court Pro</h2>
+    <p>Your partner in mastering the game</p>
+  </div>
+
+  <section class="section">
+    <h3>Our Story</h3>
+    <p>
+      Squash Court Pro was founded in 2020 with a simple mission: to bring world-class squash equipment to athletes across the Middle East. What started as a small passion project has grown into Riyadh's premier destination for professional squash gear.
+    </p>
+    <p>
+      We believe that every player—from beginners learning the fundamentals to elite athletes competing at the highest level—deserves access to premium equipment and expert guidance. Our carefully curated selection combines international brands with local expertise, ensuring that every racket, ball, and accessory meets our rigorous standards.
+    </p>
+    <p>
+      Today, we serve hundreds of players throughout Saudi Arabia and beyond, with a dedicated showroom in central Riyadh and a commitment to fast, reliable delivery across the kingdom.
+    </p>
+  </section>
+
+  <section class="section">
+    <h3>Our Values</h3>
+    <div class="values">
+      <div class="value-item">
+        <h4>🎯 Excellence</h4>
+        <p>Premium quality in every product and service</p>
+      </div>
+      <div class="value-item">
+        <h4>🤝 Community</h4>
+        <p>Building and supporting the squash community</p>
+      </div>
+      <div class="value-item">
+        <h4>🚀 Innovation</h4>
+        <p>Bringing the latest technology to our players</p>
+      </div>
+      <div class="value-item">
+        <h4>💪 Expertise</h4>
+        <p>Coached guidance from experienced professionals</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Meet Our Team</h3>
+    <div class="team">
+      <div class="team-member">
+        <div class="team-member-avatar">👨‍💼</div>
+        <h4>Ahmed Al-Rashid</h4>
+        <div class="team-member-role">Founder & Director</div>
+        <p>Squash coach with 15+ years of experience. Former national player turned entrepreneur.</p>
+      </div>
+      <div class="team-member">
+        <div class="team-member-avatar">👩‍⚕️</div>
+        <h4>Fatima Al-Dossary</h4>
+        <div class="team-member-role">Sports Science Consultant</div>
+        <p>Exercise physiologist helping players optimize performance and prevent injury.</p>
+      </div>
+      <div class="team-member">
+        <div class="team-member-avatar">👨‍🔧</div>
+        <h4>Mohammed Al-Otaibi</h4>
+        <div class="team-member-role">Equipment Specialist</div>
+        <p>Expert in racket setup, stringing, and maintenance for peak performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Get in Touch</h3>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-label">📍 Location</div>
+        <div class="contact-value">Al-Olaya District, Riyadh, Saudi Arabia</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">📧 Email</div>
+        <div class="contact-value"><a href="mailto:info@squashcourtpro.sa">info@squashcourtpro.sa</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">📱 Phone</div>
+        <div class="contact-value"><a href="tel:+966115555555">+966-1-1555-5555</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">🕐 Hours</div>
+        <div class="contact-value">Saturday–Thursday: 10 AM – 10 PM | Friday: 2 PM – 10 PM</div>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 2rem;">
+      Have questions? Our team is here to help you find the perfect equipment for your game.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Squash Court Pro. All rights reserved.</p>
+    <p>📍 Riyadh, Saudi Arabia | 📧 info@squashcourtpro.sa</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    // Load saved theme
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  </script>
+</body>
+</html>
