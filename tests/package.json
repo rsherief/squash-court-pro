@@ -1,0 +1,13 @@
+{
+  "name": "squash-site-tests",
+  "version": "1.0.0",
+  "description": "SEO and functionality tests for Squash Court Pro",
+  "scripts": {
+    "audit": "node audit.js",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}
